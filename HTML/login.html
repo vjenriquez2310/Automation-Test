@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login Practice Page</title>
+<style>
+  :root { --bg:#eef2f6; --card:#fff; --ink:#1b2733; --muted:#5c6b7a; --line:#c9d3dd; --accent:#1f5fae; --err:#b3261e; --ok:#1b7a43; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; padding:16px; }
+  main { width:100%; max-width:380px; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:28px; }
+  h1 { font-size:1.4rem; margin:0 0 4px; }
+  p.hint { margin:0 0 20px; color:var(--muted); font-size:.9rem; }
+  label { display:block; font-weight:600; font-size:.9rem; margin:14px 0 6px; }
+  input { width:100%; padding:10px 12px; font-size:1rem; border:1px solid var(--line); border-radius:6px; }
+  input:focus, button:focus-visible { outline:3px solid #9cc2ee; outline-offset:1px; }
+  .field-error { color:var(--err); font-size:.85rem; min-height:1.1em; margin-top:4px; }
+  button { width:100%; margin-top:20px; padding:11px; font-size:1rem; font-weight:600; color:#fff; background:var(--accent); border:0; border-radius:6px; cursor:pointer; }
+  #message { margin-top:16px; font-size:.95rem; min-height:1.2em; }
+  #message.error { color:var(--err); }
+  #message.success { color:var(--ok); }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<main>
+  <section id="login-view" data-testid="login-view">
+    <h1>Sign in</h1>
+    <p class="hint">Practice page. Demo login: <strong>tester</strong> / <strong>Test@1234</strong></p>
+
+    <label for="username">Username</label>
+    <input id="username" name="username" type="text" placeholder="Enter username" autocomplete="off" data-testid="username">
+    <div class="field-error" id="username-error" data-testid="username-error"></div>
+
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" placeholder="Enter password" autocomplete="off" data-testid="password">
+    <div class="field-error" id="password-error" data-testid="password-error"></div>
+
+    <button type="button" id="login-btn" data-testid="login-button">Log in</button>
+    <div id="message" role="alert" data-testid="message"></div>
+  </section>
+
+  <section id="welcome-view" class="hidden" data-testid="welcome-view">
+    <h1 data-testid="welcome-text">Welcome, tester</h1>
+    <p class="hint">You are logged in.</p>
+    <button type="button" id="logout-btn" data-testid="logout-button">Log out</button>
+  </section>
+</main>
+
+<script>
+  const DEMO_USER = "tester";
+  const DEMO_PASS = "Test@1234";
+  const $ = (id) => document.getElementById(id);
+
+  function showMessage(text, type) {
+    const m = $("message");
+    m.textContent = text;
+    m.className = type || "";
+  }
+
+  function login() {
+    const user = $("username").value.trim();
+    const pass = $("password").value;
+    $("username-error").textContent = user ? "" : "Username is required.";
+    $("password-error").textContent = pass ? "" : "Password is required.";
+    showMessage("");
+    if (!user || !pass) return;
+
+    if (user === DEMO_USER && pass === DEMO_PASS) {
+      showMessage("Login successful.", "success");
+      $("login-view").classList.add("hidden");
+      $("welcome-view").classList.remove("hidden");
+    } else {
+      showMessage("Invalid username or password.", "error");
+    }
+  }
+
+  function logout() {
+    $("welcome-view").classList.add("hidden");
+    $("login-view").classList.remove("hidden");
+    $("username").value = "";
+    $("password").value = "";
+    showMessage("");
+  }
+
+  $("login-btn").addEventListener("click", login);
+  $("logout-btn").addEventListener("click", logout);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !$("login-view").classList.contains("hidden")) login();
+  });
+</script>
+</body>
+</html>
