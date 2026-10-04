@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 const BASE = 'https://jsonplaceholder.typicode.com';
 
 // ---------------------------------------------------------------
-// Ch. 7: HTTP methods (GET, POST, PUT, PATCH, DELETE)
+// HTTP methods (GET, POST, PUT, PATCH, DELETE)
 // ---------------------------------------------------------------
 test.describe('HTTP methods', () => {
   test('GET a single user', async ({ request }) => {
@@ -55,7 +55,7 @@ test.describe('HTTP methods', () => {
 });
 
 // ---------------------------------------------------------------
-// Ch. 8: Request options (query params)
+// Request options (query params)
 // ---------------------------------------------------------------
 test.describe('Query params', () => {
   test('filter posts by userId', async ({ request }) => {
@@ -71,7 +71,7 @@ test.describe('Query params', () => {
 });
 
 // ---------------------------------------------------------------
-// Ch. 9: Response validation (status, headers, body, structure)
+// Response validation (status, headers, body, structure)
 // ---------------------------------------------------------------
 test.describe('Response validation', () => {
   test('list users: status, header, and length', async ({ request }) => {
@@ -107,7 +107,7 @@ test.describe('Response validation', () => {
 });
 
 // ---------------------------------------------------------------
-// Ch. 14: Negative tests (test the errors on purpose)
+// Negative tests (test the errors on purpose)
 // ---------------------------------------------------------------
 test.describe('Negative cases', () => {
   test('unknown user returns 404', async ({ request }) => {
